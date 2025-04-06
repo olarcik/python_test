@@ -1,4 +1,3 @@
-from typing import assert_type
 
 import requests
 
@@ -71,7 +70,7 @@ def put_a_post():
         json=body,
         headers=headers
     )
-    assert response.json()['title'] == 'foor', 'Title was not chenged'
+    assert response.json()['title'] == 'foor', 'Title was not changed'
     clear(post_id)
 
 
