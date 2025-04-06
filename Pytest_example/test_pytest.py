@@ -18,12 +18,20 @@ def new_post_id():
     )
     post_id = response.json()['id']
     print(f'Post created: {post_id}')
-    return post_id
+    yield post_id
+    print('Deleting post')
+    requests.delete(f'https://jsonplaceholder.typicode.com/posts/{post_id}')
+
+@pytest.fixture(scope='session')
+def hello():
+    print('hello')
+    yield
+    print('bye')
 
 
 
 
-def test_get_one_post(new_post_id):
+def test_get_one_post(new_post_id, hello):
     response = requests.get(f'https://jsonplaceholder.typicode.com/posts/{new_post_id}').json()
     assert response['id'] == new_post_id , 'Post ID is different than indicated'
 
@@ -51,3 +59,16 @@ def test_post_a_post():
 
     assert response.status_code == 201, f'Status code is incorrect, status code is {response.status_code}'
     assert response.json()['id'] == 101, 'Id is incorrect'
+
+@pytest.mark.regression
+def test_one():
+    assert 1 == 1
+
+@pytest.mark.smoke
+def test_two():
+    assert 1 == 1
+
+@pytest.mark.parametrize('logins', ['', ' ', '(*&^'])
+def test_three(logins):
+    print('')
+    assert 1 == 1
