@@ -1,0 +1,3 @@
+hello
+Post created: 101
+Deleting post
